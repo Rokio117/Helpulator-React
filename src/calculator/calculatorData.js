@@ -94,7 +94,7 @@ const calcData = [
     name: "divide",
     value: "divide",
     display: "÷", //alt+0247
-    classes: ["calcbutton", "operation"],
+    classes: ["calcbutton", "operation",'row4'],
     id: "divide"
   },
   {

@@ -1,0 +1,13 @@
+#calcContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.calcbutton{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
