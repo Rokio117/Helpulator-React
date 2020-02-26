@@ -69,13 +69,7 @@ const calcData = [
     classes: ["calcbutton", "numberButton", "row1"],
     id: "zero"
   },
-  {
-    name: "add",
-    value: "add",
-    display: "+",
-    classes: ["calcbutton", "operation", "row1"],
-    id: "addition"
-  },
+  
   {
     name: "subtract",
     value: "subtract",
@@ -110,7 +104,14 @@ const calcData = [
     display: "C",
     classes: ["calcbutton", "row1"],
     id: "erase"
-  }
+  },
+  {
+    name: "add",
+    value: "add",
+    display: "+",
+    classes: ["calcbutton", "operation", "row1"],
+    id: "addition"
+  },
 ];
 
 export default calcData;
