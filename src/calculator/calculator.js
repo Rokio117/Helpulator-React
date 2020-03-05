@@ -12,7 +12,7 @@ class Calculator extends Component {
       operations: [],
       numInProgress: [],
       disabledOperations: true,
-      equation:[],
+      equation: [],
       equalsPressed: false
     };
   }
@@ -35,7 +35,6 @@ class Calculator extends Component {
           newEquation.push(equation[i - 1] - equation[9 + 1]);
         }
       }
-      
     }
     let firstOperations = ["×", "÷"];
 
@@ -46,36 +45,56 @@ class Calculator extends Component {
         } else newEquation.push(equation[9 - 1] / equation[i + 1]);
       } else newEquation.push(equation[i]);
     }
-    return(this.compute(newEquation))
+    return this.compute(newEquation);
   }
 
   //if equation contains multiplication or division need to do those first
   //otherwise do equation in order
 
-  addSubtract(equation){
-    console.log(equation,'equation')
-    
-    if(equation.length <=1){
-      this.setState({display: equation[0]})
-      console.log(equation[0],'answer')
-      return equation[0]
-    }
-    let newEquation = []
-    const first = equation[1]==='add' ? (parseInt(equation[0])  + parseInt(equation[2]) ) : (parseInt(equation[0])  - parseInt(equation[2]) )
-    newEquation.push(first)
-    
-    if(equation.length > 3){
-      console.log(equation.length,'equation.length')
-      for(let i = 3; i<equation.length; i++){
-        console.log('pushed')
-        newEquation.push(equation[i])
-    }
-      
-      
-    }
-    
-    this.addSubtract(newEquation)
+  addSubtract(equation) {
+    console.log(equation, "equation");
 
+    if (equation.length <= 1) {
+      this.setState({ display: equation[0] });
+      console.log(equation[0], "answer");
+      return equation[0];
+    }
+    let newEquation = [];
+    const first =
+      equation[1] === "add"
+        ? parseInt(equation[0]) + parseInt(equation[2])
+        : parseInt(equation[0]) - parseInt(equation[2]);
+    newEquation.push(first);
+
+    if (equation.length > 3) {
+      console.log(equation.length, "equation.length");
+      for (let i = 3; i < equation.length; i++) {
+        console.log("pushed");
+        newEquation.push(equation[i]);
+      }
+    }
+
+    this.addSubtract(newEquation);
+  }
+
+  multiplyDivide(equation) {
+    //if the equation includes division or multiplication
+    if (equation.length === 1) {
+      return equation;
+    }
+    if (equation.includes("÷") || equation.includes("×")) {
+      let newEquation = [];
+
+      for (let i = 1; i < equation.length; i++) {
+        if (
+          equation[i] === "÷" ||
+          equation[i] === "×" ||
+          equation[i + 1] === "÷" ||
+          equation[i + 1] === "×"
+        ) {
+        } else newEquation.push(equation[i]);
+      }
+    } else return this.addSubtract(equation);
   }
 
   operationDisabled(name) {
@@ -94,13 +113,13 @@ class Calculator extends Component {
       <button
         onClick={e => {
           e.preventDefault();
-         
+
           const operations = ["subtract", "multiply", "divide", "add"];
           if (typeof button.value === "number") {
             // if(this.state.equalsPressed){
-            //   this.setState({ 
+            //   this.setState({
             //     equalsPressed: false,
-                
+
             //   })
 
             // }
@@ -111,18 +130,17 @@ class Calculator extends Component {
             this.setState({
               numInProgress: numInProgress,
               display: numberDisplay,
-              disabledOperations:false
+              disabledOperations: false
             });
           } else if (button.value === "erase") {
-            
             this.setState({
               guess: "",
               numbers: [],
               display: [],
               operations: [],
               numInProgress: [],
-              disabledOperations:true,
-              equation:[]
+              disabledOperations: true,
+              equation: []
             });
           }
           if (operations.includes(e.target.value)) {
@@ -131,9 +149,9 @@ class Calculator extends Component {
             const currentNumbers = this.state.numbers;
             const operations = this.state.operations;
             const newDisplay = this.state.display;
-            const newEquation = this.state.equation
-            newEquation.push(finishedNumber)
-            newEquation.push(e.target.value)
+            const newEquation = this.state.equation;
+            newEquation.push(finishedNumber);
+            newEquation.push(e.target.value);
             newDisplay.push(button.display);
             currentNumbers.push(finishedNumber);
             operations.push(e.target.value);
@@ -143,8 +161,7 @@ class Calculator extends Component {
               numInProgress: [],
               numbers: currentNumbers,
               display: newDisplay,
-              disabledOperations:true,
-
+              disabledOperations: true
             });
           }
           if (e.target.value === "equals") {
@@ -153,12 +170,9 @@ class Calculator extends Component {
             const finalEquation = this.state.equation;
             finalEquation.push(finalNumber);
             allNumbers.push(finalNumber);
-            this.setState({ disabledOperations: true, equalsPressed:true });
-            this.addSubtract(finalEquation)
-            
-          
+            this.setState({ disabledOperations: true, equalsPressed: true });
+            this.addSubtract(finalEquation);
           }
-         
         }}
         className={`${button.classes.map(className => className).join(" ")}`}
         id={button.id}
